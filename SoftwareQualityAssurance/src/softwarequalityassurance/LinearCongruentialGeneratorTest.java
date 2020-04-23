@@ -146,26 +146,6 @@ class LinearCongruentialGeneratorTest {
 	}
 	
 	/**
-	 * Test method for {@link LinearCongruentialGenerator#generateNextSequenceYElement}
-	 * @param a the 'a' parameter of the generator
-	 * @param c the 'c' parameter of the generator
-	 * @param m the 'm' parameter of the generator
-	 * @param k the 'k' parameter of the generator
-	 * @param currentXElement the current element of the X sequence
-	 */
-	@ParameterizedTest
-	@DisplayName("Test for 'generateNextSequenceYElement' method")
-	@CsvSource({"678567, 578, 5785, 5678, 7876", "8978, 78678, 67, 898, 78967"})
-	void testGenerateNextSequenceYElement(int a, int c, int m, int k, int currentXElement) {
-		lcg.setParameters(a, c, m, k);
-		int expectedResult = currentXElement % k;
-		
-		int result = lcg.generateNextSequenceYElement(currentXElement);
-		
-		assertEquals(expectedResult, result);
-	}
-	
-	/**
 	 * It generates lists for the test supporter method of the distance specifier method,
 	 * {@link LinearCongruentialGeneratorTest#generateArgumentsStream}.
 	 * @param sizeOfList size of the list

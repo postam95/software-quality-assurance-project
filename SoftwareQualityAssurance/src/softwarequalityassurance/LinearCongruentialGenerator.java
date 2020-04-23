@@ -151,7 +151,7 @@ public class LinearCongruentialGenerator {
 	 * @return the length of the longest repetition if it is exist, 0 otherwise
 	 */
 	int calculateCycleLength() {
-		int currentXElement = 0, currentYElement = 0, currentPosition = 0,
+		int currentXElement = 0, currentPosition = 0, 
 			doubleSpeedCurrentPosition = 1, meetingPosition = -1, repeatingValue = -1;
 		boolean cycle_is_exist = false;
 		
@@ -161,8 +161,7 @@ public class LinearCongruentialGenerator {
 		for (int index = 0; index < m * 2; index++)
 		{
 			currentXElement = generateNextSequenceXElement(currentXElement);
-			currentYElement = generateNextSequenceYElement(currentXElement);
-			sequence.add(currentYElement);
+			sequence.add(currentXElement);
 
 			if (index % 2 == 0)
 			{
@@ -195,15 +194,6 @@ public class LinearCongruentialGenerator {
 	 */
 	int generateNextSequenceXElement(int currentXElement)	{
 		return (a * currentXElement + c) % m;
-	}
-	
-	/**
-	 * Generates the next element of the Y sequence based on the latest X element.
-	 * @param currentXElement the latest element of the X sequence
-	 * @return the next element of the Y sequence
-	 */
-	int generateNextSequenceYElement(int currentXElement)	{
-		return currentXElement % k;
 	}
 	
 	/**
