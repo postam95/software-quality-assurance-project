@@ -4,7 +4,7 @@
  * Copyright (c) 2020 University of Miskolc
  */
 
-package hu.unimiskolc.softwarequalityassurance;
+package hu.unimiskolc.softwarequalityassurance.lcg;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;

@@ -8,6 +8,8 @@ package hu.unimiskolc.softwarequalityassurance;
 
 import java.util.Scanner;
 
+import hu.unimiskolc.softwarequalityassurance.lcg.LinearCongruentialGenerator;
+
 /**
  * Main class. The base of this program which provides entry and exit point.
  * 
@@ -36,14 +38,11 @@ public class Main {
 			c = scanner.nextInt();
 			m = scanner.nextInt();
 			k = scanner.nextInt();
-			
 			lcg.setParameters(a, c, m, k);
-			System.out.println("a = " + a + " c = " + c + " m = " + m + " k = " + k);
 			System.out.println(lcg.calculateCycleLength());
 			System.out.println(lcg.getSequence());
 			System.out.println(lcg.getSequenceB());
 		}
-		
 		scanner.close();
 	}
 

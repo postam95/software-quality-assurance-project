@@ -4,7 +4,7 @@
  * Copyright (c) 2020 University of Miskolc
  */
 
-package hu.unimiskolc.softwarequalityassurance;
+package hu.unimiskolc.softwarequalityassurance.lcg;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -32,8 +32,8 @@ public class LinearCongruentialGenerator {
 	 * A list of integers which is a mathematical sequence generated
 	 * by the algorithm.
 	 */
-	private List<Integer> sequence;
-	private List<Integer> sequenceB;
+	private List<Integer> sequenceX;
+	private List<Integer> sequenceY;
 	/**
 	 * Default constructor to create empty, uninitialized instance. 
 	 */
@@ -110,11 +110,11 @@ public class LinearCongruentialGenerator {
 	 * @return a mathematical sequence.
 	 */
 	public List<Integer> getSequence() {
-		return sequence;
+		return sequenceX;
 	}
 	
 	public List<Integer> getSequenceB() {
-		return sequenceB;
+		return sequenceY;
 	}
 	
 	/**
@@ -122,7 +122,7 @@ public class LinearCongruentialGenerator {
 	 * @param sequence a mathematical sequence
 	 */
 	public void setSequence(List<Integer> sequence) {
-		this.sequence = sequence;
+		this.sequenceX = sequence;
 	}
 	
 	/**
@@ -138,12 +138,12 @@ public class LinearCongruentialGenerator {
 		this.c = c;
 		this.m = m;
 		this.k = k;
-		
-		sequenceB = new LinkedList<>();
-		if (sequence == null)
-			sequence = new LinkedList<Integer>();
+
+		sequenceY = new LinkedList<>();
+		if (sequenceX == null)
+			sequenceX = new LinkedList<Integer>();
 		else
-			sequence.clear();
+			sequenceX.clear();
 	}
 	
 	/**
@@ -152,29 +152,29 @@ public class LinearCongruentialGenerator {
 	 * While the algorithm is generating the sequence, it is searching for equal
 	 * elements that means a cycle. The algorithm generates two sequences (X, Y),
 	 * where X the base sequence and Y derived from X. The Y is the main sequence,
-	 * it stored in {@link LinearCongruentialGenerator#sequence}.
+	 * it stored in {@link LinearCongruentialGenerator#sequenceX}.
 	 * @return the length of the longest repetition if it is exist, 0 otherwise
 	 */
-	int calculateCycleLength() {
+	public int calculateCycleLength() {
 		int currentXElement = 0, currentYElement = 0, currentPosition = 0,
-			doubleSpeedCurrentPosition = 1, meetingPosition = -1, repeatingValue = -1;
+			doubleSpeedCurrentPosition = 0, meetingPosition = -1, repeatingValue = -1;
 		boolean cycle_is_exist = false;
 		
-		sequence.clear();
-		sequence.add(0);
+		sequenceX.clear();
+		sequenceX.add(0);
 		
-		sequenceB.clear();
-		sequenceB.add(0);
+		sequenceY.clear();
+		sequenceY.add(0);
 
-		for (int index = 0; index < m * 2; index++)	{
+		for (int index = 0; index < m * 3; index++)	{
 			currentXElement = generateNextSequenceXElement(currentXElement);
 			currentYElement = generateNextSequenceYElement(currentXElement);
-			sequence.add(currentXElement);
-			sequenceB.add(currentYElement);
+			sequenceX.add(currentXElement);
+			sequenceY.add(currentYElement);
 
 			if (index % 2 == 0)	{
-				if (sequence.get(currentPosition) == sequence.get(doubleSpeedCurrentPosition))	{
-					repeatingValue = sequence.get(currentPosition);
+				if (index != 0 && (sequenceX.get(currentPosition).equals(sequenceX.get(doubleSpeedCurrentPosition))))	{
+					repeatingValue = sequenceX.get(currentPosition);
 					cycle_is_exist = true;
 					meetingPosition = doubleSpeedCurrentPosition;
 					break;
@@ -185,11 +185,30 @@ public class LinearCongruentialGenerator {
 		}
 
 		if (cycle_is_exist)	{
-			return specifyDistanceBetweenRepeatingValues(meetingPosition, repeatingValue);
+			int lengthOfCycle = specifyDistanceBetweenRepeatingValues(meetingPosition, repeatingValue);
+			if (m > k && m % k == 0)	{
+				lengthOfCycle = calculateInsiderCycleLength(meetingPosition, repeatingValue, lengthOfCycle);
+			}
+			return lengthOfCycle;
 		}
 		else	{
 			return 0;
 		}
+		
+	}
+	
+	int calculateInsiderCycleLength(int meetingPosition, int repeatingValue, int lengthOfCycle)	{
+		int possibleLenghtOfInsiderCycle = lengthOfCycle / (m / k);
+		boolean isInsiderCycleExist = true;
+
+		for (int index = meetingPosition - 1; index >= meetingPosition - possibleLenghtOfInsiderCycle; index--)	{
+
+			if (sequenceY.get(index) != sequenceY.get(index - possibleLenghtOfInsiderCycle))	{
+				isInsiderCycleExist = false;
+			}
+		}
+
+		return isInsiderCycleExist ? possibleLenghtOfInsiderCycle : lengthOfCycle;
 	}
 	
 	/**
@@ -219,7 +238,7 @@ public class LinearCongruentialGenerator {
 	 */
 	int specifyDistanceBetweenRepeatingValues(int meetingPosition, int repeatingValue)	{
 		for (int index = meetingPosition - 1; index > -1; index--)
-			if (sequence.get(index) == repeatingValue)
+			if (sequenceX.get(index) == repeatingValue)
 				return meetingPosition - index;
 		return 0;
 	}
