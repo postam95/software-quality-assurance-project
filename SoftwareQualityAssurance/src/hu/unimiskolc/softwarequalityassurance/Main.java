@@ -4,7 +4,7 @@
  * Copyright (c) 2020 University of Miskolc
  */
 
-package softwarequalityassurance;
+package hu.unimiskolc.softwarequalityassurance;
 
 import java.util.Scanner;
 
@@ -38,8 +38,10 @@ public class Main {
 			k = scanner.nextInt();
 			
 			lcg.setParameters(a, c, m, k);
-			
+			System.out.println("a = " + a + " c = " + c + " m = " + m + " k = " + k);
 			System.out.println(lcg.calculateCycleLength());
+			System.out.println(lcg.getSequence());
+			System.out.println(lcg.getSequenceB());
 		}
 		
 		scanner.close();
