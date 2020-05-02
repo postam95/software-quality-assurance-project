@@ -40,8 +40,8 @@ public class Main {
 			k = scanner.nextInt();
 			lcg.setParameters(a, c, m, k);
 			System.out.println(lcg.calculateCycleLength());
-			System.out.println(lcg.getSequence());
-			System.out.println(lcg.getSequenceB());
+//			System.out.println(lcg.getSequence());
+//			System.out.println(lcg.getSequenceB());
 		}
 		scanner.close();
 	}
