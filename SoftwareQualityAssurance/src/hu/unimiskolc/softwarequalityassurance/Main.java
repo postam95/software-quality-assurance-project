@@ -6,6 +6,7 @@
 
 package hu.unimiskolc.softwarequalityassurance;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import hu.unimiskolc.softwarequalityassurance.lcg.LinearCongruentialGenerator;
@@ -29,25 +30,18 @@ public class Main {
 	 * this sequence.
 	 * @param args are not used in this program
 	 */
-	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		long a, c, m, k;
+	public static void main(String[] args) throws IOException {
 		int numberOfTestCases;
-		
+		Scanner scanner = new Scanner(System.in);
 		numberOfTestCases = scanner.nextInt();
 		
 		for (int index = 0; index < numberOfTestCases; index++)	{
-			a = scanner.nextLong();
-			c = scanner.nextLong();
-			m = scanner.nextLong();
-			k = scanner.nextLong();
-			
-			lcg.setParameters(a, c, m, k);
-			
+			lcg.readFromConsoleInput(scanner);
 			System.out.println(lcg.calculateCycleLength());
 		}
 		
 		scanner.close();
+		
 	}
 
 }

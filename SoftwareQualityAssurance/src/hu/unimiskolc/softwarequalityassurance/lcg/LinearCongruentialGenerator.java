@@ -9,6 +9,7 @@ package hu.unimiskolc.softwarequalityassurance.lcg;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -283,6 +284,30 @@ public class LinearCongruentialGenerator {
 		}
 
 		return 0;
+	}
+	
+	/**
+	 * Reads parameters from console input and calls parameter setter method to initialize
+	 * the Linear Congruential Generator.
+	 * @param scanner
+	 * @return number of values successfully read from console input
+	 */
+	public int readFromConsoleInput(Scanner scanner)	{
+		int parameterCounter = 0;
+		long a, c, m, k;
+		
+		a = scanner.nextLong();
+		parameterCounter++;
+		c = scanner.nextLong();
+		parameterCounter++;
+		m = scanner.nextLong();
+		parameterCounter++;
+		k = scanner.nextLong();
+		parameterCounter++;
+		
+		setParameters(a, c, m, k);
+		
+		return parameterCounter;
 	}
 	
 }
