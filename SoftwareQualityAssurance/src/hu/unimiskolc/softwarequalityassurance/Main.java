@@ -18,6 +18,9 @@ import hu.unimiskolc.softwarequalityassurance.lcg.LinearCongruentialGenerator;
  */
 public class Main {
 
+	static final Scanner scanner = new Scanner (System.in);
+	static final LinearCongruentialGenerator lcg = new LinearCongruentialGenerator();
+	
 	/**
 	 * The main function where the program begins and ends. This function reads
 	 * parameters from the console input, calls the methods of the
@@ -27,22 +30,23 @@ public class Main {
 	 * @param args are not used in this program
 	 */
 	public static void main(String[] args) {
-		int a, c, m, k, numberOfTestCases;
 		Scanner scanner = new Scanner(System.in);
-		LinearCongruentialGenerator lcg = new LinearCongruentialGenerator();
+		long a, c, m, k;
+		int numberOfTestCases;
 		
 		numberOfTestCases = scanner.nextInt();
 		
 		for (int index = 0; index < numberOfTestCases; index++)	{
-			a = scanner.nextInt();
-			c = scanner.nextInt();
-			m = scanner.nextInt();
-			k = scanner.nextInt();
+			a = scanner.nextLong();
+			c = scanner.nextLong();
+			m = scanner.nextLong();
+			k = scanner.nextLong();
+			
 			lcg.setParameters(a, c, m, k);
+			
 			System.out.println(lcg.calculateCycleLength());
-//			System.out.println(lcg.getSequence());
-//			System.out.println(lcg.getSequenceB());
 		}
+		
 		scanner.close();
 	}
 

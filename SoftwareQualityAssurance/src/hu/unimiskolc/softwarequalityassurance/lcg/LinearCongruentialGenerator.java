@@ -154,11 +154,15 @@ public class LinearCongruentialGenerator {
 		this.m = m;
 		this.k = k;
 
-		sequenceY = new LinkedList<>();
 		if (sequenceX == null)
 			sequenceX = new LinkedList<Long>();
 		else
 			sequenceX.clear();
+		
+		if (sequenceY == null)
+			sequenceY = new LinkedList<Long>();
+		else
+			sequenceY.clear();
 	}
 	
 	/**
@@ -182,7 +186,7 @@ public class LinearCongruentialGenerator {
 		sequenceY.clear();
 		sequenceY.add(0L);
 
-		for (int index = 0; index < m * 2; index++)	{
+		for (int index = 0; index < m * 3; index++)	{
 			currentXElement = generateNextSequenceXElement(currentXElement);
 			currentYElement = generateNextSequenceYElement(currentXElement);
 			sequenceX.add(currentXElement);
@@ -235,7 +239,7 @@ public class LinearCongruentialGenerator {
 		}
 		
 		int size = insiderCycle.size();
-		
+
 		if (lengthOfCycle == size || lengthOfCycle % size != 0)
 			return lengthOfCycle;
 		

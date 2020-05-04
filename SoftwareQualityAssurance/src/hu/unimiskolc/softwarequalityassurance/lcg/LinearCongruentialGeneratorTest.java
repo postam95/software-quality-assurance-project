@@ -33,7 +33,7 @@ class LinearCongruentialGeneratorTest {
 	 * It provides a reference for a LinearCongruentialGenerator instance
 	 * to all unit tests.
 	 */
-	LinearCongruentialGenerator lcg;
+	static LinearCongruentialGenerator lcg;
 
 	/**
 	 * Sets up the LinearCongruentialGenerator instance.
@@ -153,9 +153,9 @@ class LinearCongruentialGeneratorTest {
 	 * @param maxValue last value of the longest repetition
 	 * @return a test list
 	 */
-	private static List <Integer> generateTestListForSpecifyDistanceBetweenRepeatingValues (int sizeOfList, int minValue, int maxValue)	{
-		List<Integer> testList = new LinkedList<>();
-		for (int index = 0, valueToList = minValue ; index < sizeOfList; index++, valueToList++)	{
+	private static List <Long> generateTestList(long sizeOfList, long minValue, long maxValue)	{
+		List<Long> testList = new LinkedList<>();
+		for (long index = 0, valueToList = minValue ; index < sizeOfList; index++, valueToList++)	{
 			if (valueToList > maxValue)
 				valueToList = minValue;
 			testList.add(valueToList);
@@ -169,14 +169,14 @@ class LinearCongruentialGeneratorTest {
 	 * {@link LinearCongruentialGeneratorTest#testSpecifyDistanceBetweenRepeatingValues}.
 	 * @return a stream of lists as argument
 	 */
-	private static Stream<Arguments> generateArgumentsStream() {
+	private static Stream<Arguments> generateArgumentsStreamForSpecifyingDistanceBetweenRepeatingValues() {
 	    List<Arguments> listOfArguments = new LinkedList<>();
 	    
-	    listOfArguments.add(Arguments.of(generateTestListForSpecifyDistanceBetweenRepeatingValues(100, 1, 50)));
-	    listOfArguments.add(Arguments.of(generateTestListForSpecifyDistanceBetweenRepeatingValues(200, 1, 1000)));
-	    listOfArguments.add(Arguments.of(generateTestListForSpecifyDistanceBetweenRepeatingValues(300, 100, 200)));
-	    listOfArguments.add(Arguments.of(generateTestListForSpecifyDistanceBetweenRepeatingValues(50, 1, 1)));
-	    listOfArguments.add(Arguments.of(generateTestListForSpecifyDistanceBetweenRepeatingValues(0, 0, 0)));
+	    listOfArguments.add(Arguments.of(generateTestList(100, 1, 50)));
+	    listOfArguments.add(Arguments.of(generateTestList(200, 1, 1000)));
+	    listOfArguments.add(Arguments.of(generateTestList(300, 100, 200)));
+	    listOfArguments.add(Arguments.of(generateTestList(50, 1, 1)));
+	    listOfArguments.add(Arguments.of(generateTestList(0, 0, 0)));
 	    
 	    return listOfArguments.stream();
 	}
@@ -188,22 +188,22 @@ class LinearCongruentialGeneratorTest {
 	 */
 	@ParameterizedTest
 	@DisplayName("Test for 'specifyDistanceBetweenRepeatingValues' method")
-	@MethodSource("generateArgumentsStream")
+	@MethodSource("generateArgumentsStreamForSpecifyingDistanceBetweenRepeatingValues")
 	void testSpecifyDistanceBetweenRepeatingValues(List<Long> testList) {
-		long expectedResult = 0, repeatingValue = 0;
+		long expectedResult = 0L, repeatingValue = 0L;
 		int meetingPosition = 0; 
 		
 		lcg.setSequenceX(testList);
 		for (int index = 1; index < testList.size(); index++)	{
 			if (testList.get(index) < testList.get(index-1))	{
-				expectedResult = testList.get(index-1) - testList.get(index) + 1;
+				expectedResult = testList.get(index-1) - testList.get(index) + 1L;
 				meetingPosition = index;
 				repeatingValue = testList.get(index);
 				break;
 			}
 		}
 		
-		int result = lcg.specifyDistanceBetweenRepeatingValues(meetingPosition, repeatingValue);
+		long result = lcg.specifyDistanceBetweenRepeatingValues(meetingPosition, repeatingValue);
 		
 		assertEquals(expectedResult, result);
 	}
@@ -219,11 +219,11 @@ class LinearCongruentialGeneratorTest {
 	 */
 	@ParameterizedTest
 	@DisplayName("Test for 'calculateCycleLength' method")
-	@CsvSource({"179870, 19879129, 392300, 12, 3922", "211508, 3857765, 995028, 16, 20586",
-				"191276, 82311778, 802656, 15, 696", "601205, 49605847, 551139, 18, 91856",
-				"772603, 56945167, 285696, 15, 23040", "479233, 47185687, 172688, 8, 8",
-				"604634, 84517094, 123050, 15, 5830", "716541, 58132495, 229013, 5, 364",
-				"614594, 32896081, 184751, 14, 184744", "292575, 235759, 435933, 20, 48436",
+	@CsvSource({"2643, 173052, 2029, 9, 2028", "2911, 86166, 2050, 14, 25",
+				"1115, 266190, 1393, 10, 198", "2373, 194924, 720, 10, 4",
+				"543, 88421, 1447, 9, 1446", "1866, 121353, 1613, 20, 1612",
+				"2582, 8024, 1969, 8, 890", "1801, 160908, 2174, 15, 181",
+				"1405, 194624, 2004, 10, 498", "2275, 224474, 1653, 6, 126",
 				"0, 0, 0, 0, 0", "1, 1, 4, 2, 2"})
 	void testCalculateCycleLength(long a, long c, long m, long k, long expectedResult) {
 		lcg.setParameters(a, c, m, k);
@@ -232,4 +232,46 @@ class LinearCongruentialGeneratorTest {
 		
 		assertEquals(expectedResult, result);
 	}
+	
+	/**
+	 * It generates a stream of arguments which contains lists
+	 * for the test method of the insider cycle calculator method,
+	 * {@link LinearCongruentialGeneratorTest#testSpecifyDistanceBetweenRepeatingValues}.
+	 * @return a stream of lists as argument
+	 */
+	private static Stream<Arguments> generateArgumentsStreamForCalculateInsiderCycle() {
+	    List<Arguments> listOfArguments = new LinkedList<>();
+	    
+	    listOfArguments.add(Arguments.of(generateTestList(300, 1, 50)));
+	    
+	    return listOfArguments.stream();
+	}
+	
+	/**
+	 * Test method for {@link LinearCongruentialGenerator#calculateInsiderCycle}.
+	 * @param testList a list of integers that represents the mathematical
+	 * sequence generated by the Linear Congruential Generator.
+	 */
+	@ParameterizedTest
+	@DisplayName("Test for 'specifyDistanceBetweenRepeatingValues' method")
+	@MethodSource("generateArgumentsStreamForCalculateInsiderCycle")
+	void testCalculateInsiderCycle(List<Long> testList) {
+		long expectedResult = 0L, repeatingValue = 0L;
+		int meetingPosition = 0; 
+		
+		lcg.setSequenceX(testList);
+		for (int index = 1; index < testList.size(); index++)	{
+			if (testList.get(index) < testList.get(index-1))	{
+				expectedResult = testList.get(index-1) - testList.get(index) + 1L;
+				meetingPosition = index;
+				repeatingValue = testList.get(index);
+				break;
+			}
+		}
+		
+		long result = lcg.specifyDistanceBetweenRepeatingValues(meetingPosition, repeatingValue);
+		
+		assertEquals(expectedResult, result);
+	}
+
 }
