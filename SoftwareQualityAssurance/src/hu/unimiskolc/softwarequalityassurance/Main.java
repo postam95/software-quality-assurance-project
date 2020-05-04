@@ -1,5 +1,5 @@
 /*
- * @(#)Main.java		1.0 20/04/21
+ * @(#)Main.java		1.0 20/05/04
  * 
  * Copyright (c) 2020 University of Miskolc
  */
@@ -14,8 +14,8 @@ import hu.unimiskolc.softwarequalityassurance.lcg.LinearCongruentialGenerator;
 /**
  * Main class. The base of this program which provides entry and exit point.
  * 
- * @version 1.0 21 April 2020
- * @author Mario Posta, University of Miskolc. 2020.04.21.
+ * @version 1.0 04 May 2020
+ * @author Mario Posta, University of Miskolc. 2020.05.04
  */
 public class Main {
 
@@ -30,14 +30,19 @@ public class Main {
 	 * this sequence.
 	 * @param args are not used in this program
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		int numberOfTestCases;
 		Scanner scanner = new Scanner(System.in);
 		numberOfTestCases = scanner.nextInt();
 		
 		for (int index = 0; index < numberOfTestCases; index++)	{
-			lcg.readFromConsoleInput(scanner);
-			System.out.println(lcg.calculateCycleLength());
+			try {
+				lcg.readFromConsoleInput(scanner);
+				System.out.println(lcg.calculateCycleLength());
+			} catch (IOException e) {
+				System.out.println("Error occurred while reading from console input!");
+				e.printStackTrace();
+			}
 		}
 		
 		scanner.close();

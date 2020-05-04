@@ -1,11 +1,12 @@
 /*
- * @(#)LinearCongruentialGenerator.java		1.0 20/04/21
+ * @(#)LinearCongruentialGenerator.java		1.0 20/05/04
  * 
  * Copyright (c) 2020 University of Miskolc
  */
 
 package hu.unimiskolc.softwarequalityassurance.lcg;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,8 +18,8 @@ import java.util.TreeSet;
  * This class provides the functionality of the program. It implements
  * the Linear Congruential Generator and its related functions.
  * 
- * @version 1.0 22 April 2020
- * @author Mario Posta, University of Miskolc, 2020.04.21.
+ * @version 1.0 04 May 2020
+ * @author Mario Posta, University of Miskolc. 2020.05.04
  */
 public class LinearCongruentialGenerator {
 	
@@ -292,7 +293,7 @@ public class LinearCongruentialGenerator {
 	 * @param scanner
 	 * @return number of values successfully read from console input
 	 */
-	public int readFromConsoleInput(Scanner scanner)	{
+	public int readFromConsoleInput(Scanner scanner) throws IOException	{
 		int parameterCounter = 0;
 		long a, c, m, k;
 		
